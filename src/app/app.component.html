@@ -8,7 +8,11 @@
 
     @if (showingDropdown && speechService.voices[0]) {
     <div class="dropdown-content">
-      <p *ngFor="let voice of speechService.voices" class="voice">
+      <p
+        *ngFor="let voice of speechService.voices"
+        class="voice"
+        (click)="chooseVoice(voice.name)"
+      >
         {{ voice.name }}
       </p>
     </div>

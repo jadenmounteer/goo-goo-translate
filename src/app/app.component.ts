@@ -45,4 +45,9 @@ export class AppComponent {
     event.stopPropagation();
     this.showingDropdown = !this.showingDropdown;
   }
+
+  protected async chooseVoice(voiceName: string): Promise<void> {
+    await this.speechService.speak('Hello, world!', voiceName);
+    this.showingDropdown = false;
+  }
 }
