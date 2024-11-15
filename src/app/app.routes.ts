@@ -10,7 +10,7 @@ export const routes: Routes = [
   {
     path: 'caputre-video',
     component: CaptureVideoComponent,
-  }
+  },
   // Default route must be last
   {
     path: '',
