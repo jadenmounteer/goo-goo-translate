@@ -20,7 +20,7 @@ export class TranslationPageComponent {
   @ViewChild('recordedVideo') recordedVideoElementRef: ElementRef | undefined;
   private videoService: VideoService = inject(VideoService);
   public recordedVideoElement: HTMLVideoElement | undefined;
-  protected translationService: TranslationService = inject(TranslationService);
+  private translationService: TranslationService = inject(TranslationService);
 
   ngAfterViewInit() {
     console.log('TranslationPageComponent ngAfterViewInit');

@@ -14,14 +14,11 @@ export class TranslationService {
 
   constructor() {
     this.listOfTranslations = from(this.fetchAllTranslations());
-  }
 
-  // public chooseRandomTranslation(): void {
-  //   const randomIndex = Math.floor(
-  //     Math.random() * this.listOfTranslations.length
-  //   );
-  //   this.translation = of(this.listOfTranslations[randomIndex]);
-  // }
+    this.listOfTranslations.subscribe((translations) => {
+      this.translationsLoading = false;
+    });
+  }
 
   private async fetchAllTranslations(): Promise<Translation[]> {
     const response = await fetch('assets/translations.json');
