@@ -7,6 +7,11 @@ export const routes: Routes = [
     component: LandingPageComponent,
   },
   {
+    path: 'translate',
+    component: TranslateComponent,
+  }
+  // Default route must be last
+  {
     path: '',
     component: LandingPageComponent,
   },

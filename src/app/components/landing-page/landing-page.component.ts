@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -8,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {
-  protected beginTranslation() {}
+  private router: Router = inject(Router);
+
+  protected beginTranslation(): void {
+    this.router.navigate(['/translate']);
+  }
 }
