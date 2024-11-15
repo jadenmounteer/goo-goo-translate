@@ -48,7 +48,7 @@ export class TranslationPageComponent {
     }
   }
 
-  private sayTranslation(translation: Translation) {
+  protected sayTranslation(translation: Translation) {
     const msg = new SpeechSynthesisUtterance();
     msg.text = translation.phrase;
     window.speechSynthesis.speak(msg);

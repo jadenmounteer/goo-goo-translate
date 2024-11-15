@@ -1,13 +1,14 @@
 <video
   class="video"
   style="width: 360 !important"
-  controls
   #recordedVideo
   playsinline
-  controls
   autoplay
+  loop
 ></video>
 
 @if(translation) {
 {{ translation.phrase }}
+
+<button (click)="sayTranslation(translation)">Repeat</button>
 }
