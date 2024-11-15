@@ -26,3 +26,13 @@ button:active {
   text-decoration: none;
   color: white;
 }
+
+@mixin for-tablet-portrait-up {
+  @media (min-width: 650px) {
+    @content;
+  }
+}
+
+video {
+  width: 100%;
+}
