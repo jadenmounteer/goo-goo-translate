@@ -1,21 +1,53 @@
 @import "../../scss-partials/main.scss";
 
-.goo1 {
+//Code to modify logo details
+/*.goo1 {
   color: $logo-blue;
 }
 
 .goo2 {
   color: $logo-yellow;
+  position: relative;
+  top: -45px;
+  left: 70px;
 }
 
 .tran {
   color: $logo-red;
+  position: relative;
+  top: -75px;
+  left: 20px;
 }
 
-.header {
+.logo {
+  position: relative;
+}
+
+img {
+  position: relative;
+  width: 10%;
+  top: -180px;
+  left: 125px;
+  transform: scalex(-1);
+}
+
+.icon {
+  position: absolute;
+}
+
+.logo-content-wrapper {
   display: flex;
   flex-direction: column;
   margin: 0;
+}
+*/
+
+img {
+  width: 50%;
+}
+
+img:hover {
+  cursor: pointer;
 }
 
 div {
