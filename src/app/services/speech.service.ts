@@ -8,7 +8,6 @@ export class SpeechService {
 
   constructor() {
     this.loadVoices().then((voices) => {
-      console.log(voices);
       this.voices = voices;
     });
   }
