@@ -45,14 +45,15 @@ export class TranslationPageComponent {
     }
   }
 
-  playRecording() {
-    if (
-      !this.videoService.recordedBlobs ||
-      !this.videoService.recordedBlobs.length
-    ) {
-      alert('cannot play.');
-      return;
-    }
-    this.recordedVideoElement?.play();
-  }
+  // We can use this if we don't want it to autoplay
+  // protected playRecording() {
+  //   if (
+  //     !this.videoService.recordedBlobs ||
+  //     !this.videoService.recordedBlobs.length
+  //   ) {
+  //     alert('cannot play.');
+  //     return;
+  //   }
+  //   this.recordedVideoElement?.play();
+  // }
 }
