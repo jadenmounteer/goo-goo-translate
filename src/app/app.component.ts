@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { LogoComponent } from './logo/logo/logo.component';
 
@@ -12,5 +12,4 @@ import { LogoComponent } from './logo/logo/logo.component';
 })
 export class AppComponent {
   title = 'goo-goo-translate';
-  protected router: Router = inject(Router);
 }
