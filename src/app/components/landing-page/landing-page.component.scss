@@ -1,6 +1,15 @@
 @import "../../scss-partials/main.scss";
 
 .landing-page {
+  gap: 10px;
+}
+
+.brief {
+  text-align: center;
+  @include translation-font();
+}
+
+.landing-buttons {
   display: flex;
   flex-direction: column;
   gap: 10px;
