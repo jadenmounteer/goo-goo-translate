@@ -79,4 +79,8 @@ export class SpeechService {
   public stopSpeaking(): void {
     window.speechSynthesis.cancel();
   }
+
+  public saveSetting(key: 'rate' | 'pitch' | 'volume', value: number) {
+    localStorage.setItem(key, value.toString());
+  }
 }
