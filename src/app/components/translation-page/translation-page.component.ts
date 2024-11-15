@@ -1,6 +1,13 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../../services/video-service';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'app-translation-page',
@@ -11,18 +18,18 @@ import { VideoService } from '../../services/video-service';
 })
 export class TranslationPageComponent {
   @ViewChild('recordedVideo') recordedVideoElementRef: ElementRef | undefined;
-
   private videoService: VideoService = inject(VideoService);
   public recordedVideoElement: HTMLVideoElement | undefined;
+  protected translationService: TranslationService = inject(TranslationService);
 
   ngAfterViewInit() {
+    console.log('TranslationPageComponent ngAfterViewInit');
     this.recordedVideoElement = this.recordedVideoElementRef?.nativeElement;
 
     if (this.recordedVideoElement) {
       this.recordedVideoElement.src = this.videoService.downloadUrl;
     }
   }
-  constructor() {}
 
   playRecording() {
     if (
