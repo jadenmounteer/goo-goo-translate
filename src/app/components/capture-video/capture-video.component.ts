@@ -6,6 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { VideoService } from '../../services/video-service';
 
 @Component({
   selector: 'app-capture-video',
@@ -15,18 +16,18 @@ import { Router } from '@angular/router';
   styleUrl: './capture-video.component.scss',
 })
 export class CaptureVideoComponent {
-  @ViewChild('recordedVideo') recordedVideoElementRef: ElementRef | undefined;
   @ViewChild('video') videoElementRef: ElementRef | undefined;
 
   private router: Router = inject(Router);
   private ngZone: NgZone = inject(NgZone);
+  private videoService: VideoService = inject(VideoService);
 
   videoElement: HTMLVideoElement | undefined;
-  recordedVideoElement: HTMLVideoElement | undefined;
+
   mediaRecorder: any;
-  recordedBlobs: Blob[] = [];
+
   isRecording: boolean = false;
-  downloadUrl: string = '';
+
   stream: MediaStream | undefined;
 
   constructor() {}
@@ -40,7 +41,6 @@ export class CaptureVideoComponent {
 
     if (this.videoElementRef) {
       this.videoElement = this.videoElementRef?.nativeElement;
-      this.recordedVideoElement = this.recordedVideoElementRef?.nativeElement;
 
       this.stream = stream;
 
@@ -51,7 +51,7 @@ export class CaptureVideoComponent {
   async ngOnInit() {}
 
   startRecording() {
-    this.recordedBlobs = [];
+    this.videoService.recordedBlobs = [];
     let options: any = { mimeType: 'video/mp4' };
 
     try {
@@ -73,22 +73,14 @@ export class CaptureVideoComponent {
   stopRecording() {
     this.mediaRecorder.stop();
     this.isRecording = !this.isRecording;
-    console.log('Recorded Blobs: ', this.recordedBlobs);
-  }
-
-  playRecording() {
-    if (!this.recordedBlobs || !this.recordedBlobs.length) {
-      alert('cannot play.');
-      return;
-    }
-    this.recordedVideoElement?.play();
+    console.log('Recorded Blobs: ', this.videoService.recordedBlobs);
   }
 
   onDataAvailableEvent() {
     try {
       this.mediaRecorder.ondataavailable = (event: any) => {
         if (event.data && event.data.size > 0) {
-          this.recordedBlobs.push(event.data);
+          this.videoService.recordedBlobs.push(event.data);
         }
       };
     } catch (error) {
@@ -99,18 +91,14 @@ export class CaptureVideoComponent {
   onStopRecordingEvent() {
     try {
       this.mediaRecorder.onstop = (event: Event) => {
-        const videoBuffer = new Blob(this.recordedBlobs, {
+        const videoBuffer = new Blob(this.videoService.recordedBlobs, {
           type: 'video/mp4',
         });
-        this.downloadUrl = window.URL.createObjectURL(videoBuffer); // you can download with <a> tag
+        this.videoService.downloadUrl = window.URL.createObjectURL(videoBuffer); // you can download with <a> tag
 
         this.ngZone.run(() => {
           this.router.navigate([`translation-page`]);
         });
-
-        if (this.recordedVideoElement) {
-          this.recordedVideoElement.src = this.downloadUrl;
-        }
       };
     } catch (error) {
       alert('error on line 102');
