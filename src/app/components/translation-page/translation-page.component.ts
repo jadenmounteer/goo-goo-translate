@@ -3,11 +3,16 @@ import {
   computed,
   ElementRef,
   inject,
+  Signal,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../../services/video-service';
-import { TranslationService } from '../../services/translation.service';
+import {
+  Translation,
+  TranslationService,
+} from '../../services/translation.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-translation-page',
@@ -21,9 +26,21 @@ export class TranslationPageComponent {
   private videoService: VideoService = inject(VideoService);
   public recordedVideoElement: HTMLVideoElement | undefined;
   private translationService: TranslationService = inject(TranslationService);
+  protected translation: Translation | undefined;
+  private translationSub: Subscription | undefined;
+
+  constructor() {
+    this.translationSub = this.translationService.translations$.subscribe(
+      (translations) => {
+        this.translation = this.getInitialTranslation(translations);
+        if (this.translation) {
+          this.sayTranslation(this.translation);
+        }
+      }
+    );
+  }
 
   ngAfterViewInit() {
-    console.log('TranslationPageComponent ngAfterViewInit');
     this.recordedVideoElement = this.recordedVideoElementRef?.nativeElement;
 
     if (this.recordedVideoElement) {
@@ -31,14 +48,29 @@ export class TranslationPageComponent {
     }
   }
 
-  playRecording() {
-    if (
-      !this.videoService.recordedBlobs ||
-      !this.videoService.recordedBlobs.length
-    ) {
-      alert('cannot play.');
-      return;
-    }
-    this.recordedVideoElement?.play();
+  protected sayTranslation(translation: Translation) {
+    const msg = new SpeechSynthesisUtterance();
+    msg.text = translation.phrase;
+    window.speechSynthesis.speak(msg);
   }
+
+  ngOnDestroy() {
+    this.translationSub?.unsubscribe();
+  }
+
+  private getInitialTranslation(translations: Translation[]): Translation {
+    return this.translationService.chooseRandomTranslation(translations);
+  }
+
+  // We can use this if we don't want it to autoplay
+  // protected playRecording() {
+  //   if (
+  //     !this.videoService.recordedBlobs ||
+  //     !this.videoService.recordedBlobs.length
+  //   ) {
+  //     alert('cannot play.');
+  //     return;
+  //   }
+  //   this.recordedVideoElement?.play();
+  // }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { from, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
-interface Translation {
+export interface Translation {
   phrase: string;
 }
 
@@ -9,20 +9,22 @@ interface Translation {
   providedIn: 'root',
 })
 export class TranslationService {
-  public translationsLoading: boolean = true;
-  private listOfTranslations: Observable<Translation[]>;
+  private translationsSubject = new BehaviorSubject<Translation[]>([]);
+  translations$ = this.translationsSubject.asObservable();
 
   constructor() {
-    this.listOfTranslations = from(this.fetchAllTranslations());
-
-    this.listOfTranslations.subscribe((translations) => {
-      this.translationsLoading = false;
-    });
+    this.fetchAllTranslations();
   }
 
-  private async fetchAllTranslations(): Promise<Translation[]> {
+  private async fetchAllTranslations(): Promise<void> {
     const response = await fetch('assets/translations.json');
-    const translations: Promise<Translation[]> = response.json();
-    return translations;
+    const translations: Translation[] = await response.json();
+    this.translationsSubject.next(translations);
+  }
+
+  public chooseRandomTranslation(Translations: Translation[]): Translation {
+    const randomIndex = Math.floor(Math.random() * Translations.length);
+
+    return Translations[randomIndex];
   }
 }
