@@ -12,6 +12,6 @@ export class LandingPageComponent {
   private router: Router = inject(Router);
 
   protected beginTranslation(): void {
-    this.router.navigate(['/translate']);
+    this.router.navigate(['/capture-video']);
   }
 }

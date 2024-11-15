@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { CaptureVideoComponent } from './components/capture-video/capture-video.component';
 
 export const routes: Routes = [
   {
@@ -7,8 +8,8 @@ export const routes: Routes = [
     component: LandingPageComponent,
   },
   {
-    path: 'translate',
-    component: TranslateComponent,
+    path: 'caputre-video',
+    component: CaptureVideoComponent,
   }
   // Default route must be last
   {
