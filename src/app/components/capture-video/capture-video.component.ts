@@ -21,25 +21,24 @@ export class CaptureVideoComponent {
 
   constructor() {}
 
-  async ngOnInit() {
-    navigator.mediaDevices
-      .getUserMedia({
-        video: {
-          width: 360,
-        },
-      })
-      .then((stream) => {
-        if (this.videoElement) {
-          this.videoElement = this.videoElementRef?.nativeElement;
-          this.recordVideoElement = this.recordVideoElementRef?.nativeElement;
+  async ngAfterViewInit() {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        width: 360,
+      },
+    });
 
-          this.stream = stream;
-          if (this.videoElement?.srcObject) {
-            this.videoElement.srcObject = this.stream;
-          }
-        }
-      });
+    if (this.videoElementRef) {
+      this.videoElement = this.videoElementRef?.nativeElement;
+      this.recordVideoElement = this.recordVideoElementRef?.nativeElement;
+
+      this.stream = stream;
+
+      this.videoElement!.srcObject = this.stream;
+    }
   }
+
+  async ngOnInit() {}
 
   startRecording() {
     this.recordedBlobs = [];
