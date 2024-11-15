@@ -12,6 +12,7 @@ import {
   TranslationService,
 } from '../../services/translation.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-translation-page',
@@ -25,22 +26,19 @@ export class TranslationPageComponent {
   private videoService: VideoService = inject(VideoService);
   public recordedVideoElement: HTMLVideoElement | undefined;
   private translationService: TranslationService = inject(TranslationService);
-  private translations: Signal<Translation[] | undefined> = toSignal(
-    this.translationService.translations$
-  );
+  protected translation: Translation | undefined;
+  private translationSub: Subscription | undefined;
 
-  protected translation: Signal<Translation | undefined> = computed(() => {
-    const translations = this.translations();
-    if (translations) {
-      const translation =
-        this.translationService.chooseRandomTranslation(translations);
-      const msg = new SpeechSynthesisUtterance();
-      msg.text = translation.phrase;
-      window.speechSynthesis.speak(msg);
-      return;
-    }
-    return undefined;
-  });
+  constructor() {
+    this.translationSub = this.translationService.translations$.subscribe(
+      (translations) => {
+        this.translation = this.getInitialTranslation(translations);
+        if (this.translation) {
+          this.sayTranslation(this.translation);
+        }
+      }
+    );
+  }
 
   ngAfterViewInit() {
     this.recordedVideoElement = this.recordedVideoElementRef?.nativeElement;
@@ -48,6 +46,20 @@ export class TranslationPageComponent {
     if (this.recordedVideoElement) {
       this.recordedVideoElement.src = this.videoService.downloadUrl;
     }
+  }
+
+  private sayTranslation(translation: Translation) {
+    const msg = new SpeechSynthesisUtterance();
+    msg.text = translation.phrase;
+    window.speechSynthesis.speak(msg);
+  }
+
+  ngOnDestroy() {
+    this.translationSub?.unsubscribe();
+  }
+
+  private getInitialTranslation(translations: Translation[]): Translation {
+    return this.translationService.chooseRandomTranslation(translations);
   }
 
   // We can use this if we don't want it to autoplay
