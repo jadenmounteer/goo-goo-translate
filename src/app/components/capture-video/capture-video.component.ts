@@ -1,4 +1,11 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  NgZone,
+  ViewChild,
+} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-capture-video',
@@ -10,6 +17,9 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 export class CaptureVideoComponent {
   @ViewChild('recordedVideo') recordedVideoElementRef: ElementRef | undefined;
   @ViewChild('video') videoElementRef: ElementRef | undefined;
+
+  private router: Router = inject(Router);
+  private ngZone: NgZone = inject(NgZone);
 
   videoElement: HTMLVideoElement | undefined;
   recordedVideoElement: HTMLVideoElement | undefined;
@@ -93,6 +103,10 @@ export class CaptureVideoComponent {
           type: 'video/mp4',
         });
         this.downloadUrl = window.URL.createObjectURL(videoBuffer); // you can download with <a> tag
+
+        this.ngZone.run(() => {
+          this.router.navigate([`translation-page`]);
+        });
 
         if (this.recordedVideoElement) {
           this.recordedVideoElement.src = this.downloadUrl;
