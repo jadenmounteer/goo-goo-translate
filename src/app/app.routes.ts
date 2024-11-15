@@ -8,7 +8,7 @@ export const routes: Routes = [
     component: LandingPageComponent,
   },
   {
-    path: 'caputre-video',
+    path: 'capture-video',
     component: CaptureVideoComponent,
   },
   // Default route must be last
