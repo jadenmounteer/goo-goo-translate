@@ -8,11 +8,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   styleUrl: './capture-video.component.scss',
 })
 export class CaptureVideoComponent {
-  @ViewChild('recordedVideo') recordVideoElementRef: ElementRef | undefined;
+  @ViewChild('recordedVideo') recordedVideoElementRef: ElementRef | undefined;
   @ViewChild('video') videoElementRef: ElementRef | undefined;
 
   videoElement: HTMLVideoElement | undefined;
-  recordVideoElement: HTMLVideoElement | undefined;
+  recordedVideoElement: HTMLVideoElement | undefined;
   mediaRecorder: any;
   recordedBlobs: Blob[] = [];
   isRecording: boolean = false;
@@ -30,7 +30,7 @@ export class CaptureVideoComponent {
 
     if (this.videoElementRef) {
       this.videoElement = this.videoElementRef?.nativeElement;
-      this.recordVideoElement = this.recordVideoElementRef?.nativeElement;
+      this.recordedVideoElement = this.recordedVideoElementRef?.nativeElement;
 
       this.stream = stream;
 
@@ -71,7 +71,7 @@ export class CaptureVideoComponent {
       alert('cannot play.');
       return;
     }
-    this.recordVideoElement?.play();
+    this.recordedVideoElement?.play();
   }
 
   onDataAvailableEvent() {
@@ -94,8 +94,8 @@ export class CaptureVideoComponent {
         });
         this.downloadUrl = window.URL.createObjectURL(videoBuffer); // you can download with <a> tag
 
-        if (this.recordVideoElement) {
-          this.recordVideoElement.src = this.downloadUrl;
+        if (this.recordedVideoElement) {
+          this.recordedVideoElement.src = this.downloadUrl;
         }
       };
     } catch (error) {
