@@ -57,6 +57,7 @@ export class TranslationPageComponent {
 
   ngOnDestroy() {
     this.translationSub?.unsubscribe();
+    this.speechService.stopSpeaking();
   }
 
   private getInitialTranslation(translations: Translation[]): Translation {

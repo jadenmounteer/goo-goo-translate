@@ -55,4 +55,8 @@ export class SpeechService {
     }
     window.speechSynthesis.speak(utterance);
   }
+
+  public stopSpeaking(): void {
+    window.speechSynthesis.cancel();
+  }
 }
