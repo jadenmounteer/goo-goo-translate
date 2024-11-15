@@ -37,6 +37,26 @@
   max-height: 500px;
 }
 
+.voice-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 .voice {
   cursor: pointer;
+}
+
+.fa-check {
+  color: $logo-green;
+}
+
+.test-voice-icon {
+  cursor: pointer;
+  margin-left: auto;
+  font-size: 2em;
+}
+
+.dropdown-section {
+  text-align: center;
+  text-decoration: underline;
 }

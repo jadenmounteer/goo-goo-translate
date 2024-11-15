@@ -8,13 +8,21 @@
 
     @if (showingDropdown && speechService.voices[0]) {
     <div class="dropdown-content">
-      <p
-        *ngFor="let voice of speechService.voices"
-        class="voice"
-        (click)="chooseVoice(voice.name)"
-      >
-        {{ voice.name }}
-      </p>
+      <h3 class="dropdown-section">Voices</h3>
+      <div class="voice-wrapper" *ngFor="let voice of speechService.voices">
+        <p class="voice" (click)="chooseVoice(voice.name)">
+          {{ voice.name }}
+        </p>
+
+        @if( speechService.selectedVoice && speechService.selectedVoice ==
+        voice.name ) {
+        <div>
+          <i class="fa fa-solid fa-check"></i>
+        </div>
+        }
+
+        <div class="test-voice-icon" (click)="testVoice(voice.name)">👂</div>
+      </div>
     </div>
     }
   </div>

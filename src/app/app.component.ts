@@ -47,8 +47,15 @@ export class AppComponent {
   }
 
   protected async chooseVoice(voiceName: string): Promise<void> {
-    localStorage.setItem('selectedVoice', voiceName);
-    await this.speechService.speak('Hello, world!');
+    this.speechService.selectVoice(voiceName);
+
     this.showingDropdown = false;
+  }
+
+  protected async testVoice(voiceName: string): Promise<void> {
+    await this.speechService.speak(
+      'This app is not pediatrician recommended!',
+      voiceName
+    );
   }
 }
