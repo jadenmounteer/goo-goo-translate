@@ -40,3 +40,16 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# dotenv environment variables file
+.env
+.env.test
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json
+
+# angular environment variables
+src/environments/environment.prod.ts
+src/environments/environment.ts
