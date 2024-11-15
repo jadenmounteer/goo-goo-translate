@@ -13,6 +13,7 @@ import {
 } from '../../services/translation.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Subscription } from 'rxjs';
+import { SpeechService } from '../../services/speech.service';
 
 @Component({
   selector: 'app-translation-page',
@@ -26,6 +27,8 @@ export class TranslationPageComponent {
   private videoService: VideoService = inject(VideoService);
   public recordedVideoElement: HTMLVideoElement | undefined;
   private translationService: TranslationService = inject(TranslationService);
+  private speechService: SpeechService = inject(SpeechService);
+
   protected translation: Translation | undefined;
   private translationSub: Subscription | undefined;
 

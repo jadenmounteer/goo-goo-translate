@@ -5,24 +5,29 @@ import { Injectable } from '@angular/core';
 })
 export class SpeechService {
   public canChangeVoice = false;
+  public voices: SpeechSynthesisVoice[] | undefined;
 
   constructor() {
     this.canChangeVoice = this.checkIfCanChangeVoice();
+    if (this.canChangeVoice) {
+      this.voices = window.speechSynthesis.getVoices();
+      console.log(this.voices);
+    }
   }
 
   private checkIfCanChangeVoice(): boolean {
+    // Android doesn't support this. https://developer.mozilla.org/en-US/docs/Web/API/Window/speechSynthesis
     if (
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      /Android/i.test(
         navigator.userAgent ||
           (typeof window.speechSynthesis.onvoiceschanged == 'undefined'
             ? ''
             : 'undefined')
       )
     ) {
-      alert("Can't change voice!");
       return false;
     }
-    alert('Can change voice!');
+
     return true;
   }
 }
