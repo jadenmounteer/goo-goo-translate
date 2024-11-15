@@ -4,11 +4,18 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { LogoComponent } from './logo/logo/logo.component';
 import { SpeechService } from './services/speech.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LandingPageComponent, LogoComponent, CommonModule],
+  imports: [
+    RouterOutlet,
+    LandingPageComponent,
+    LogoComponent,
+    CommonModule,
+    FormsModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

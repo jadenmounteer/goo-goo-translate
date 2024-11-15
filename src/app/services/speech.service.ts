@@ -6,6 +6,9 @@ import { Injectable } from '@angular/core';
 export class SpeechService {
   public voices: SpeechSynthesisVoice[] = [];
   public selectedVoice: string | undefined;
+  public rate = 1;
+  public pitch = 1;
+  public volume = 1;
 
   constructor() {
     this.loadVoices().then((voices) => {
@@ -52,6 +55,10 @@ export class SpeechService {
     );
     if (voiceFound) {
       utterance.voice = voiceFound;
+      console.log(utterance);
+      utterance.rate = this.rate;
+      utterance.pitch = this.pitch;
+      utterance.volume = this.volume;
     }
     window.speechSynthesis.speak(utterance);
   }
