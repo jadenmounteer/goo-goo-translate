@@ -4,30 +4,35 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class SpeechService {
-  public canChangeVoice = false;
-  public voices: SpeechSynthesisVoice[] | undefined;
+  voices: SpeechSynthesisVoice[] = [];
 
   constructor() {
-    this.canChangeVoice = this.checkIfCanChangeVoice();
-    if (this.canChangeVoice) {
-      this.voices = window.speechSynthesis.getVoices();
-      console.log(this.voices);
-    }
+    this.loadVoices().then((voices) => {
+      console.log(voices);
+      this.voices = voices;
+    });
   }
 
-  private checkIfCanChangeVoice(): boolean {
-    // Android doesn't support this. https://developer.mozilla.org/en-US/docs/Web/API/Window/speechSynthesis
-    if (
-      /Android/i.test(
-        navigator.userAgent ||
-          (typeof window.speechSynthesis.onvoiceschanged == 'undefined'
-            ? ''
-            : 'undefined')
-      )
-    ) {
-      return false;
-    }
+  private loadVoices(): Promise<SpeechSynthesisVoice[]> {
+    return new Promise((resolve) => {
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length) {
+        resolve(voices);
+      } else {
+        window.speechSynthesis.onvoiceschanged = () => {
+          resolve(window.speechSynthesis.getVoices());
+        };
+      }
+    });
+  }
 
-    return true;
+  async speak(text: string, voiceName: string) {
+    await this.loadVoices(); // Ensure voices are loaded
+    const utterance = new SpeechSynthesisUtterance(text);
+    const selectedVoice = this.voices.find((voice) => voice.name === voiceName);
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+    }
+    window.speechSynthesis.speak(utterance);
   }
 }
