@@ -9,6 +9,8 @@ export class SpeechService {
   constructor() {
     this.loadVoices().then((voices) => {
       console.log(voices);
+      // Filter voices by lang = eng-US
+      voices = voices.filter((voice) => voice.lang === 'en-US');
       this.voices = voices;
     });
   }
@@ -26,8 +28,9 @@ export class SpeechService {
     });
   }
 
-  async speak(text: string, voiceName: string) {
+  async speak(text: string) {
     await this.loadVoices(); // Ensure voices are loaded
+    const voiceName = localStorage.getItem('selectedVoice');
     const utterance = new SpeechSynthesisUtterance(text);
     const selectedVoice = this.voices.find((voice) => voice.name === voiceName);
     if (selectedVoice) {
