@@ -24,6 +24,7 @@ export class TranslationService {
 
   public chooseRandomTranslation(Translations: Translation[]): Translation {
     const randomIndex = Math.floor(Math.random() * Translations.length);
+
     return Translations[randomIndex];
   }
 }

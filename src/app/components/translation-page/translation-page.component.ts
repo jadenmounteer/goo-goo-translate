@@ -32,7 +32,12 @@ export class TranslationPageComponent {
   protected translation: Signal<Translation | undefined> = computed(() => {
     const translations = this.translations();
     if (translations) {
-      return this.translationService.chooseRandomTranslation(translations);
+      const translation =
+        this.translationService.chooseRandomTranslation(translations);
+      const msg = new SpeechSynthesisUtterance();
+      msg.text = translation.phrase;
+      window.speechSynthesis.speak(msg);
+      return;
     }
     return undefined;
   });
