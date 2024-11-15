@@ -6,6 +6,8 @@
 
 .brief {
   text-align: center;
+  font-size: 140%;
+  color: white;
   @include translation-font();
 }
 
@@ -35,7 +37,7 @@ button {
   border-radius: 0.3rem;
   border: 0.3rem solid white;
   padding: 0.7rem;
-  font-size: 125%;
+  font-size: 140%;
   @include base-font();
 }
 
