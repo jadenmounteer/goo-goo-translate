@@ -42,16 +42,16 @@ export class CaptureVideoComponent {
 
   startRecording() {
     this.recordedBlobs = [];
-    let options: any = { mimeType: 'video/webm' };
+    let options: any = { mimeType: 'video/mp4' };
 
     try {
       if (this.stream) {
         this.mediaRecorder = new MediaRecorder(this.stream, options);
       } else {
-        console.error('Stream is undefined');
+        alert('Stream is undefined');
       }
     } catch (err) {
-      console.log(err);
+      alert('error on line 54');
     }
 
     this.mediaRecorder.start(); // collect 100ms of data
@@ -68,7 +68,7 @@ export class CaptureVideoComponent {
 
   playRecording() {
     if (!this.recordedBlobs || !this.recordedBlobs.length) {
-      console.log('cannot play.');
+      alert('cannot play.');
       return;
     }
     this.recordVideoElement?.play();
@@ -82,7 +82,7 @@ export class CaptureVideoComponent {
         }
       };
     } catch (error) {
-      console.log(error);
+      alert('error on line 85');
     }
   }
 
@@ -90,7 +90,7 @@ export class CaptureVideoComponent {
     try {
       this.mediaRecorder.onstop = (event: Event) => {
         const videoBuffer = new Blob(this.recordedBlobs, {
-          type: 'video/webm',
+          type: 'video/mp4',
         });
         this.downloadUrl = window.URL.createObjectURL(videoBuffer); // you can download with <a> tag
 
@@ -99,7 +99,7 @@ export class CaptureVideoComponent {
         }
       };
     } catch (error) {
-      console.log(error);
+      alert('error on line 102');
     }
   }
 }
