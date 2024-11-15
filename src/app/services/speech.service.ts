@@ -6,11 +6,12 @@ import { Injectable } from '@angular/core';
 export class SpeechService {
   public voices: SpeechSynthesisVoice[] = [];
   public selectedVoice: string | undefined;
-  public rate = 1;
-  public pitch = 1;
-  public volume = 1;
+  public rate = this.initializeSetting('rate', 1.2);
+  public pitch = this.initializeSetting('pitch', 2);
+  public volume = this.initializeSetting('volume', 2);
 
   constructor() {
+    console.log('rate', this.rate);
     this.loadVoices().then((voices) => {
       const voiceFromLocalStorage = localStorage.getItem('selectedVoice');
 
@@ -25,6 +26,17 @@ export class SpeechService {
       voices = voices.filter((voice) => voice.lang === 'en-US');
       this.voices = voices;
     });
+  }
+
+  private initializeSetting(
+    key: 'rate' | 'pitch' | 'volume',
+    defaultValue: number
+  ): number {
+    const storedValue = Number(localStorage.getItem(key));
+    if (storedValue === 0) {
+      return defaultValue;
+    }
+    return storedValue;
   }
 
   private loadVoices(): Promise<SpeechSynthesisVoice[]> {
@@ -46,6 +58,7 @@ export class SpeechService {
   }
 
   async speak(text: string, voiceName?: string) {
+    this.stopSpeaking();
     await this.loadVoices(); // Ensure voices are loaded
 
     const voiceNameToUse = voiceName || this.selectedVoice;
