@@ -10,11 +10,11 @@ body {
   align-content: center;
 }
 
-h1 {
+/* h1 {
   @include bubble-font();
   color: rgb(255, 255, 255);
   font-size: 2.5rem;
-}
+} */
 
 .header {
   display: inline-flex;
@@ -25,6 +25,7 @@ button {
   border-radius: 0.3rem;
   border: 0.3rem solid white;
   padding: 0.7rem;
+  font-size: 125%;
   @include base-font();
 }
 
