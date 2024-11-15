@@ -11,10 +11,13 @@
 
 @if(translation) {
 
-<div>
-  <p>{{ translation.phrase }}</p>
-
-  <button (click)="sayTranslation(translation)">Repeat</button>
+<div class="translation-container">
+  <div class="translation-text">
+    <p>{{ translation.phrase }}</p>
+  </div>
+  <div class="translation-button">
+    <button (click)="sayTranslation(translation)">Repeat</button>
+  </div>
 </div>
 
 }

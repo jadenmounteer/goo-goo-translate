@@ -2,4 +2,24 @@
 
 .video-container {
   text-align: center;
+  border-radius: 0.3rem;
+}
+
+.translation-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.translation-text {
+  text-align: center;
+  background-color: white;
+  border: 0.3rem solid white;
+  border-radius: 0.3rem;
+  padding: 0.5rem;
+  @include translation-font();
+}
+
+.translation-button {
+  margin: 0.5rem;
 }
