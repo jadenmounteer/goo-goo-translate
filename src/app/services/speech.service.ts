@@ -42,15 +42,16 @@ export class SpeechService {
     this.selectedVoice = voiceName;
   }
 
-  async speak(text: string) {
+  async speak(text: string, voiceName?: string) {
     await this.loadVoices(); // Ensure voices are loaded
 
+    const voiceNameToUse = voiceName || this.selectedVoice;
     const utterance = new SpeechSynthesisUtterance(text);
-    const selectedVoice = this.voices.find(
-      (voice) => voice.name === this.selectedVoice
+    const voiceFound = this.voices.find(
+      (voice) => voice.name === voiceNameToUse
     );
-    if (selectedVoice) {
-      utterance.voice = selectedVoice;
+    if (voiceFound) {
+      utterance.voice = voiceFound;
     }
     window.speechSynthesis.speak(utterance);
   }
