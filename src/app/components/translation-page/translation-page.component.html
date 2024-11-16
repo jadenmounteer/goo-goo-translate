@@ -16,9 +16,20 @@
     <div class="translation-text">
       <div class="translator-header">
         <h5 class="translation-note">Translation</h5>
-        <i class="fa fa-pencil"></i>
+        @if(!isEditing) {
+        <i class="fa fa-pencil" (click)="editPhrase()"></i>
+        }
       </div>
+      @if(isEditing) {
+      <input type="text" [(ngModel)]="translation.phrase" class="large-input" />
+
+      <button (click)="isEditing = false">
+        Finish <i class="fa fa-solid fa-check"></i>
+      </button>
+
+      } @else {
       <p>{{ translation.phrase }}</p>
+      }
     </div>
     <div class="translation-button">
       <button (click)="sayTranslation(translation)">Repeat</button>
