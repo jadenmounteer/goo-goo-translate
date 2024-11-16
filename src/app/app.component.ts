@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { LogoComponent } from './logo/logo/logo.component';
 import { SpeechService } from './services/speech.service';
@@ -24,8 +24,10 @@ export class AppComponent {
 
   protected showingDropdown = false;
   protected speechService: SpeechService = inject(SpeechService);
+  private router: Router = inject(Router);
 
   ngOnInit() {
+    this.router.navigate(['landing-page']);
     document.addEventListener('click', this.onDocumentClick.bind(this));
   }
 
