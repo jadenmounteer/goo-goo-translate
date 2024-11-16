@@ -52,9 +52,7 @@ export class TranslationPageComponent {
   }
 
   protected sayTranslation(translation: Translation) {
-    const msg = new SpeechSynthesisUtterance();
-    msg.text = translation.phrase;
-    window.speechSynthesis.speak(msg);
+    this.speechService.speak(translation.phrase);
   }
 
   ngOnDestroy() {

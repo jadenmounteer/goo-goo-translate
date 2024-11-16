@@ -26,8 +26,9 @@ export class SpeechService {
     });
   }
 
-  async speak(text: string, voiceName: string) {
+  async speak(text: string) {
     await this.loadVoices(); // Ensure voices are loaded
+    const voiceName = localStorage.getItem('selectedVoice');
     const utterance = new SpeechSynthesisUtterance(text);
     const selectedVoice = this.voices.find((voice) => voice.name === voiceName);
     if (selectedVoice) {
