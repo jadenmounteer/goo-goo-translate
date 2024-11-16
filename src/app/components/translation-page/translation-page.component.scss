@@ -33,6 +33,7 @@
 
 .translation-button {
   margin: 0.5rem;
+  color: white;
 }
 
 .translator-header {
@@ -43,6 +44,11 @@
 .fa-pencil {
   margin-left: auto;
   cursor: pointer;
+  color: $logo-yellow;
+}
+
+.fa-trash {
+  color: $logo-red;
 }
 
 .large-input {
