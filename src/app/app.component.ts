@@ -53,6 +53,9 @@ export class AppComponent {
   }
 
   protected async testVoice(voiceName: string): Promise<void> {
-    await this.speechService.speak('Hello, world!', voiceName);
+    await this.speechService.speak(
+      'This app is not pediatrician recommended!',
+      voiceName
+    );
   }
 }
