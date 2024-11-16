@@ -18,6 +18,7 @@ import { VideoService } from '../../services/video-service';
 export class CaptureVideoComponent {
   @ViewChild('video') videoElementRef: ElementRef | undefined;
 
+  protected loading = true;
   private router: Router = inject(Router);
   private ngZone: NgZone = inject(NgZone);
   private videoService: VideoService = inject(VideoService);
@@ -46,9 +47,8 @@ export class CaptureVideoComponent {
 
       this.videoElement!.srcObject = this.stream;
     }
+    this.loading = false;
   }
-
-  async ngOnInit() {}
 
   startRecording() {
     this.videoService.recordedBlobs = [];
