@@ -1,6 +1,17 @@
 <div class="app-header">
   <app-logo></app-logo>
-  <div class="cog-icon"><i class="fa fa-cog" aria-hidden="true"></i></div>
+
+  <div class="dropdown">
+    <div class="cog-icon" (click)="toggleDropdown($event)">
+      <i class="fa fa-cog" aria-hidden="true"></i>
+    </div>
+
+    @if (showingDropdown) {
+    <div class="dropdown-content">
+      <p>Hello World!</p>
+    </div>
+    }
+  </div>
 </div>
 <div class="page-content-wrapper">
   <router-outlet />

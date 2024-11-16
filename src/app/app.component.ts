@@ -13,5 +13,35 @@ import { SpeechService } from './services/speech.service';
 })
 export class AppComponent {
   title = 'goo-goo-translate';
+
+  protected showingDropdown = false;
   private speechService: SpeechService = inject(SpeechService);
+
+  ngOnInit() {
+    document.addEventListener('click', this.onDocumentClick.bind(this));
+  }
+
+  ngOnDestroy() {
+    document.removeEventListener('click', this.onDocumentClick.bind(this));
+  }
+
+  private onDocumentClick(event: Event) {
+    const target = event.target as HTMLElement;
+    const dropdown = document.querySelector('.dropdown'); // Adjust the selector as necessary
+    const cogIcon = document.querySelector('.cog-icon');
+
+    if (
+      dropdown &&
+      !dropdown.contains(target) &&
+      cogIcon &&
+      !cogIcon.contains(target)
+    ) {
+      this.showingDropdown = false;
+    }
+  }
+
+  protected toggleDropdown(event: Event) {
+    event.stopPropagation();
+    this.showingDropdown = !this.showingDropdown;
+  }
 }
