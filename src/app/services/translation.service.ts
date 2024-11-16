@@ -9,7 +9,7 @@ export interface Translation {
   providedIn: 'root',
 })
 export class TranslationService {
-  private translationsSubject = new BehaviorSubject<Translation[]>([]);
+  public translationsSubject = new BehaviorSubject<Translation[]>([]);
   translations$ = this.translationsSubject.asObservable();
 
   constructor() {
