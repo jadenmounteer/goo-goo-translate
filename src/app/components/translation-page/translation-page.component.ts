@@ -11,14 +11,15 @@ import {
   Translation,
   TranslationService,
 } from '../../services/translation.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+
 import { Subscription } from 'rxjs';
 import { SpeechService } from '../../services/speech.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-translation-page',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './translation-page.component.html',
   styleUrl: './translation-page.component.scss',
 })
@@ -31,6 +32,7 @@ export class TranslationPageComponent {
 
   protected translation: Translation | undefined;
   private translationSub: Subscription | undefined;
+  protected isEditing: boolean = false;
 
   constructor() {
     this.translationSub = this.translationService.translations$.subscribe(
@@ -64,6 +66,9 @@ export class TranslationPageComponent {
     return this.translationService.chooseRandomTranslation(translations);
   }
 
+  protected editPhrase() {
+    this.isEditing = true;
+  }
   // We can use this if we don't want it to autoplay
   // protected playRecording() {
   //   if (
