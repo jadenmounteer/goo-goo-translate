@@ -22,6 +22,8 @@ export class CaptureVideoComponent {
   private router: Router = inject(Router);
   private ngZone: NgZone = inject(NgZone);
   private videoService: VideoService = inject(VideoService);
+  protected timer: number = 10;
+  private intervalId: any;
 
   videoElement: HTMLVideoElement | undefined;
 
@@ -68,6 +70,15 @@ export class CaptureVideoComponent {
     this.isRecording = !this.isRecording;
     this.onDataAvailableEvent();
     this.onStopRecordingEvent();
+
+    // Start the timer
+    this.timer = 10;
+    this.intervalId = setInterval(() => {
+      this.timer--;
+      if (this.timer === 0) {
+        this.stopRecording();
+      }
+    }, 1000);
   }
 
   stopRecording() {
