@@ -24,6 +24,7 @@ export class AppComponent {
 
   ngOnDestroy() {
     document.removeEventListener('click', this.onDocumentClick.bind(this));
+    this.speechService.stopSpeaking();
   }
 
   private onDocumentClick(event: Event) {
