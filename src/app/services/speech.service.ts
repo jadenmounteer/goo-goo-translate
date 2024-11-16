@@ -9,6 +9,8 @@ export class SpeechService {
   constructor() {
     this.loadVoices().then((voices) => {
       console.log(voices);
+      // Filter voices by lang = eng-US
+      voices = voices.filter((voice) => voice.lang === 'en-US');
       this.voices = voices;
     });
   }
