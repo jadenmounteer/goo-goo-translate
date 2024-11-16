@@ -1,23 +1,25 @@
-<div class="video-container">
-  <video
-    class="video"
-    style="width: 360 !important"
-    #recordedVideo
-    playsinline
-    autoplay
-    loop
-  ></video>
-</div>
-
-@if(translation) {
-
-<div class="translation-container">
-  <div class="translation-text">
-    <p>{{ translation.phrase }}</p>
+<div class="translation-page">
+  <div class="video-container">
+    <video
+      class="video"
+      style="width: 360 !important"
+      #recordedVideo
+      playsinline
+      autoplay
+      loop
+    ></video>
   </div>
-  <div class="translation-button">
-    <button (click)="sayTranslation(translation)">Repeat</button>
-  </div>
-</div>
 
-}
+  @if(translation) {
+
+  <div class="translation-container">
+    <div class="translation-text">
+      <p>{{ translation.phrase }}</p>
+    </div>
+    <div class="translation-button">
+      <button (click)="sayTranslation(translation)">Repeat</button>
+    </div>
+  </div>
+
+  }
+</div>
