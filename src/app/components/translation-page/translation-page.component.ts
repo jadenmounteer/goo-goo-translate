@@ -69,15 +69,12 @@ export class TranslationPageComponent {
   protected editPhrase() {
     this.isEditing = true;
   }
-  // We can use this if we don't want it to autoplay
-  // protected playRecording() {
-  //   if (
-  //     !this.videoService.recordedBlobs ||
-  //     !this.videoService.recordedBlobs.length
-  //   ) {
-  //     alert('cannot play.');
-  //     return;
-  //   }
-  //   this.recordedVideoElement?.play();
-  // }
+
+  protected generateNewTranslation() {
+    this.translation = this.translationService.chooseRandomTranslation(
+      this.translationService.translationsSubject.value
+    );
+
+    this.speechService.speak(this.translation.phrase);
+  }
 }

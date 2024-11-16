@@ -29,8 +29,13 @@
 
       } @else {
       <p>{{ translation.phrase }}</p>
+
+      <button class="generate-new-" (click)="isEditing = false">
+        <i class="fa fa-undo" (click)="generateNewTranslation()"></i>
+      </button>
       }
     </div>
+
     <div class="translation-button">
       <button (click)="sayTranslation(translation)">Repeat</button>
     </div>
