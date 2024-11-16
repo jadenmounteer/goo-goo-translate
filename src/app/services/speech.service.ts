@@ -4,10 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class SpeechService {
-  voices: SpeechSynthesisVoice[] = [];
+  public voices: SpeechSynthesisVoice[] = [];
 
   constructor() {
     this.loadVoices().then((voices) => {
+      console.log(voices);
       this.voices = voices;
     });
   }

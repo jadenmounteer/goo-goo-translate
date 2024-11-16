@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { LogoComponent } from './logo/logo/logo.component';
 import { SpeechService } from './services/speech.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LandingPageComponent, LogoComponent],
+  imports: [RouterOutlet, LandingPageComponent, LogoComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -15,7 +16,7 @@ export class AppComponent {
   title = 'goo-goo-translate';
 
   protected showingDropdown = false;
-  private speechService: SpeechService = inject(SpeechService);
+  protected speechService: SpeechService = inject(SpeechService);
 
   ngOnInit() {
     document.addEventListener('click', this.onDocumentClick.bind(this));
