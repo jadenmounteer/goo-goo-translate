@@ -8,7 +8,9 @@
 
     @if (showingDropdown && speechService.voices[0]) {
     <div class="dropdown-content">
-      <p *ngFor="let voice of speechService.voices">{{ voice.name }}</p>
+      <p *ngFor="let voice of speechService.voices" class="voice">
+        {{ voice.name }}
+      </p>
     </div>
     }
   </div>

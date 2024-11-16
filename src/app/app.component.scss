@@ -36,3 +36,14 @@
   overflow-y: scroll;
   max-height: 500px;
 }
+
+.voice {
+  width: 100%;
+  height: 100%;
+}
+
+.voice:hover {
+  color: $grey;
+  cursor: pointer;
+  transition: 0.3s;
+}
