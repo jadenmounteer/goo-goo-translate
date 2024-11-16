@@ -15,6 +15,7 @@ import {
 import { Subscription } from 'rxjs';
 import { SpeechService } from '../../services/speech.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-translation-page',
@@ -29,6 +30,7 @@ export class TranslationPageComponent {
   public recordedVideoElement: HTMLVideoElement | undefined;
   private translationService: TranslationService = inject(TranslationService);
   private speechService: SpeechService = inject(SpeechService);
+  private router: Router = inject(Router);
 
   protected translation: Translation | undefined;
   private translationSub: Subscription | undefined;
@@ -76,5 +78,9 @@ export class TranslationPageComponent {
     );
 
     this.speechService.speak(this.translation.phrase);
+  }
+
+  protected newRecording(): void {
+    this.router.navigate(['/capture-video']);
   }
 }
