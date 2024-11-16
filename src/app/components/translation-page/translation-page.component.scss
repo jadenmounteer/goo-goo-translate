@@ -44,3 +44,12 @@
   margin-left: auto;
   cursor: pointer;
 }
+
+button {
+  background-color: white;
+  border-radius: 0.3rem;
+  border: 0.3rem solid white;
+  padding: 0.7rem;
+  font-size: 140%;
+  @include base-font();
+}
