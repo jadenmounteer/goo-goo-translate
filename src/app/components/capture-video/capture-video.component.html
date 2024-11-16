@@ -5,13 +5,20 @@
 
   <br />
 
-  @if(!isRecording && !loading) {
-  <button class="btn btn-primary btn-lg" (click)="startRecording()">
-    Start Recording
-  </button>
-  } @else if (!loading) {
-  <button class="btn btn-warning btn-lg" (click)="stopRecording()">
-    Stop Recording ({{ timer }}s)
-  </button>
-  }
+  <div class="buttons-wrapper">
+    @if(!isRecording && !loading) {
+    <button class="btn btn-primary btn-lg" (click)="startRecording()">
+      Start Recording
+    </button>
+
+    <button (click)="changeCameraDirection()">
+      <i class="fa fa-refresh" aria-hidden="true"></i>
+    </button>
+
+    } @else if (!loading) {
+    <button class="btn btn-warning btn-lg" (click)="stopRecording()">
+      Stop Recording ({{ timer }}s)
+    </button>
+    }
+  </div>
 </div>

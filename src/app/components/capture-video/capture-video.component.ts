@@ -33,23 +33,43 @@ export class CaptureVideoComponent {
 
   stream: MediaStream | undefined;
 
+  facingMode: 'user' | 'environment' = 'user'; // Track the current camera direction
+
   constructor() {}
 
   async ngAfterViewInit() {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        width: 360,
-      },
-    });
+    await this.startCamera();
+  }
 
-    if (this.videoElementRef) {
-      this.videoElement = this.videoElementRef?.nativeElement;
+  async startCamera() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          width: 360,
+          facingMode: this.facingMode, // Use the current facing mode
+        },
+      });
 
-      this.stream = stream;
-
-      this.videoElement!.srcObject = this.stream;
+      if (this.videoElementRef) {
+        this.videoElement = this.videoElementRef.nativeElement;
+        this.stream = stream;
+        if (this.videoElement) {
+          this.videoElement.srcObject = this.stream;
+        }
+      }
+      this.loading = false;
+    } catch (error) {
+      console.error('Error accessing media devices.', error);
+      this.loading = false;
     }
-    this.loading = false;
+  }
+
+  protected async changeCameraDirection() {
+    this.facingMode = this.facingMode === 'user' ? 'environment' : 'user'; // Toggle the facing mode
+    if (this.stream) {
+      this.stream.getTracks().forEach((track) => track.stop()); // Stop the current stream
+    }
+    await this.startCamera(); // Restart the camera with the new facing mode
   }
 
   startRecording() {
@@ -63,11 +83,11 @@ export class CaptureVideoComponent {
         alert('Stream is undefined');
       }
     } catch (err) {
-      alert('error on line 54');
+      alert('Error initializing MediaRecorder: ' + err);
     }
 
     this.mediaRecorder.start(); // collect 100ms of data
-    this.isRecording = !this.isRecording;
+    this.isRecording = true;
     this.onDataAvailableEvent();
     this.onStopRecordingEvent();
 
@@ -82,9 +102,12 @@ export class CaptureVideoComponent {
   }
 
   stopRecording() {
-    this.mediaRecorder.stop();
-    this.isRecording = !this.isRecording;
-    console.log('Recorded Blobs: ', this.videoService.recordedBlobs);
+    if (this.mediaRecorder && this.isRecording) {
+      this.mediaRecorder.stop();
+      this.isRecording = false;
+      clearInterval(this.intervalId);
+      console.log('Recorded Blobs: ', this.videoService.recordedBlobs);
+    }
   }
 
   onDataAvailableEvent() {
@@ -95,7 +118,7 @@ export class CaptureVideoComponent {
         }
       };
     } catch (error) {
-      alert('error on line 85');
+      alert('Error handling data available event: ' + error);
     }
   }
 
@@ -112,7 +135,7 @@ export class CaptureVideoComponent {
         });
       };
     } catch (error) {
-      alert('error on line 102');
+      alert('Error handling stop recording event: ' + error);
     }
   }
 }
