@@ -14,3 +14,9 @@ button {
   font-size: 140%;
   @include base-font();
 }
+
+.btn-warning {
+  background-color: $logo-red;
+  border-color: $logo-red;
+  color: white;
+}
