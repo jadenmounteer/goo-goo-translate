@@ -48,5 +48,6 @@ export class AppComponent {
 
   protected async chooseVoice(voiceName: string): Promise<void> {
     await this.speechService.speak('Hello, world!', voiceName);
+    this.showingDropdown = false;
   }
 }
