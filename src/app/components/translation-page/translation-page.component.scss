@@ -60,3 +60,8 @@ button {
   font-size: 140%;
   @include base-font();
 }
+
+.buttons-wrapper {
+  display: flex;
+  justify-content: center;
+}
