@@ -88,10 +88,14 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
       context.font = '30px Arial';
       context.fillStyle = 'white';
-      context.fillText(
-        this.translation?.phrase || 'Translation Text Here',
+      const text = this.translation?.phrase || 'Translation Text Here';
+      this.drawWrappedText(
+        context,
+        text,
         10,
-        canvas.height - 30
+        canvas.height - 60,
+        canvas.width - 20,
+        30
       );
 
       // Draw the logo image at the top left corner
@@ -101,6 +105,34 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
     };
 
     draw();
+  }
+
+  private drawWrappedText(
+    context: CanvasRenderingContext2D,
+    text: string,
+    x: number,
+    y: number,
+    maxWidth: number,
+    lineHeight: number
+  ) {
+    const words = text.split(' ');
+    let line = '';
+    let lineNumber = 0;
+
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + ' ';
+      const metrics = context.measureText(testLine);
+      const testWidth = metrics.width;
+
+      if (testWidth > maxWidth && n > 0) {
+        context.fillText(line, x, y + lineNumber * lineHeight);
+        line = words[n] + ' ';
+        lineNumber++;
+      } else {
+        line = testLine;
+      }
+    }
+    context.fillText(line, x, y + lineNumber * lineHeight);
   }
 
   async downloadVideo() {
@@ -114,7 +146,7 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
     // }
 
     this.recordedBlobs = [];
-    this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+    this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/mp4' });
 
     this.mediaRecorder.ondataavailable = (event: any) => {
       if (event.data && event.data.size > 0) {
@@ -123,12 +155,12 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
     };
 
     this.mediaRecorder.onstop = () => {
-      const blob = new Blob(this.recordedBlobs, { type: 'video/webm' });
+      const blob = new Blob(this.recordedBlobs, { type: 'video/mp4' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.download = 'baby-translation.webm';
+      a.download = 'baby-translation.mp4';
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
