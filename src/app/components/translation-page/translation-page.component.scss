@@ -8,6 +8,7 @@
 
 .video-container {
   text-align: center;
+  position: relative;
 }
 
 .translation-container {
@@ -69,4 +70,11 @@ button {
 .buttons-wrapper {
   display: flex;
   justify-content: center;
+}
+
+.mute-button {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
