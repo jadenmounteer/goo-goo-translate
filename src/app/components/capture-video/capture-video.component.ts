@@ -48,6 +48,7 @@ export class CaptureVideoComponent {
           width: 360,
           facingMode: this.facingMode, // Use the current facing mode
         },
+        audio: true,
       });
 
       if (this.videoElementRef) {
@@ -55,6 +56,7 @@ export class CaptureVideoComponent {
         this.stream = stream;
         if (this.videoElement) {
           this.videoElement.srcObject = this.stream;
+          this.videoElement.muted = true;
         }
       }
       this.loading = false;
