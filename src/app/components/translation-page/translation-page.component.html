@@ -9,6 +9,10 @@
       loop
     ></video>
 
+    <button (click)="toggleMute()" class="btn btn-secondary">
+      {{ isMuted ? "Unmute" : "Mute" }}
+    </button>
+
     <!-- This canvas is used while creating the downloadable video -->
     <canvas #canvas style="display: none"></canvas>
   </div>

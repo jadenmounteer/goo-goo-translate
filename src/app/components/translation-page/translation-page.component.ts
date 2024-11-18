@@ -36,6 +36,8 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
   private mediaRecorder: MediaRecorder | undefined;
   private recordedBlobs: Blob[] = [];
 
+  protected isMuted: boolean = true;
+
   private logoImage: HTMLImageElement;
 
   constructor(
@@ -61,10 +63,18 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
     this.recordedVideoElement = this.recordedVideoElementRef?.nativeElement;
 
     if (this.recordedVideoElement) {
+      this.recordedVideoElement.muted = true;
       this.recordedVideoElement.src = this.videoService.downloadUrl;
       this.recordedVideoElement.onloadeddata = () => {
         this.drawCanvas();
       };
+    }
+  }
+
+  protected toggleMute(): void {
+    if (this.recordedVideoElement) {
+      this.recordedVideoElement.muted = !this.recordedVideoElement.muted;
+      this.isMuted = !this.isMuted;
     }
   }
 
