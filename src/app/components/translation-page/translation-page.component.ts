@@ -135,7 +135,7 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
     context.fillText(line, x, y + lineNumber * lineHeight);
   }
 
-  async downloadVideo() {
+  protected async downloadVideo() {
     const canvas = this.canvasElementRef?.nativeElement;
     const stream = canvas.captureStream();
     const videoStream = (this.recordedVideoElement as any)?.captureStream();
@@ -146,7 +146,7 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
     }
 
     this.recordedBlobs = [];
-    this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/mp4' });
+    this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
 
     this.mediaRecorder.ondataavailable = (event: any) => {
       if (event.data && event.data.size > 0) {
@@ -155,12 +155,12 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
     };
 
     this.mediaRecorder.onstop = () => {
-      const blob = new Blob(this.recordedBlobs, { type: 'video/mp4' });
+      const blob = new Blob(this.recordedBlobs, { type: 'video/webm' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.download = 'baby-translation.mp4';
+      a.download = 'baby-translation.webm';
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
