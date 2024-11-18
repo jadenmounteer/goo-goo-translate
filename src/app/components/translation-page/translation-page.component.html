@@ -2,7 +2,7 @@
   <div class="video-container">
     <video
       class="video"
-      style="width: 360 !important"
+      style="width: 360px !important"
       #recordedVideo
       playsinline
       autoplay
@@ -13,26 +13,30 @@
     <canvas #canvas style="display: none"></canvas>
   </div>
 
-  @if(translation) {
-
+  @if (translation) {
   <div class="translation-container">
     <div class="translation-text">
       <div class="translator-header">
         <h5 class="translation-note">Translation</h5>
+
         @if(!isEditing) {
-        <i class="fa fa-pencil" (click)="editPhrase()"></i>
+        <i class="fa fa-pencil" (click)="isEditing = true"></i>
         }
       </div>
-      @if(isEditing) {
-      <input type="text" [(ngModel)]="translation.phrase" class="large-input" />
 
+      @if (isEditing) {
+      <input
+        *ngIf="isEditing"
+        type="text"
+        [(ngModel)]="translation.phrase"
+        class="large-input"
+      />
       <button (click)="isEditing = false">
         Finish <i class="fa fa-solid fa-check"></i>
       </button>
-
       } @else {
-      <p>{{ translation.phrase }}</p>
 
+      <p>{{ translation.phrase }}</p>
       <button
         class="generate-new-"
         (click)="generateNewTranslation(); isEditing = false"
@@ -49,7 +53,6 @@
       <div class="translation-button">
         <button (click)="newRecording()"><i class="fa fa-trash"></i></button>
       </div>
-
       <div class="translation-button">
         <button class="btn btn-success btn-lg" (click)="downloadVideo()">
           <i class="fa fa-download"></i>
