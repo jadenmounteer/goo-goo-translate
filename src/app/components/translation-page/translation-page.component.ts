@@ -139,11 +139,11 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
     const canvas = this.canvasElementRef?.nativeElement;
     const stream = canvas.captureStream();
     const videoStream = (this.recordedVideoElement as any)?.captureStream();
-    // const audioTracks = videoStream?.getAudioTracks();
+    const audioTracks = videoStream?.getAudioTracks();
 
-    // if (audioTracks && audioTracks.length > 0) {
-    //   stream.addTrack(audioTracks[0]);
-    // }
+    if (audioTracks && audioTracks.length > 0) {
+      stream.addTrack(audioTracks[0]);
+    }
 
     this.recordedBlobs = [];
     this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/mp4' });
