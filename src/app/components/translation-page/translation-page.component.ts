@@ -36,6 +36,8 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
   private mediaRecorder: MediaRecorder | undefined;
   private recordedBlobs: Blob[] = [];
 
+  private logoImage: HTMLImageElement;
+
   constructor(
     private videoService: VideoService,
     private translationService: TranslationService,
@@ -49,6 +51,10 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
         }
       }
     );
+
+    // Load the logo image
+    this.logoImage = new Image();
+    this.logoImage.src = 'assets/Logo-remove.png';
   }
 
   ngAfterViewInit() {
@@ -87,6 +93,9 @@ export class TranslationPageComponent implements AfterViewInit, OnDestroy {
         10,
         canvas.height - 30
       );
+
+      // Draw the logo image at the top left corner
+      context.drawImage(this.logoImage, 10, 10, 100, 50); // Adjust the size and position as needed
 
       requestAnimationFrame(draw);
     };
