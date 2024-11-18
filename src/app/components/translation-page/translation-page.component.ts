@@ -83,4 +83,18 @@ export class TranslationPageComponent {
   protected newRecording(): void {
     this.router.navigate(['/capture-video']);
   }
+
+  protected async downloadVideo(): Promise<void> {
+    const blob = new Blob(this.videoService.recordedBlobs, {
+      type: 'video/webm',
+    });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = 'baby-translation.webm';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
 }
